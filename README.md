@@ -1,4 +1,4 @@
-# Aspen SIM800 Proper Usage Guide
+# Aspen SIM800 Updated Library
 
 
 ### Library Updated to NONBLOCKING MODE
