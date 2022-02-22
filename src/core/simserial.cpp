@@ -43,7 +43,10 @@ void SIM800::write(char* out) {                                 // This method a
 void SIM800::print(char* out) {                                 // This method accepts a character array as an input.
     strcat(out, "\r\n");                                        // SIM800 chip needs "\r\n" at the end of cmd string to recognize the end of line.
     simCom.print(out);                                          // Let SoftwareSerial do the actual hard work of banging the outgoing cmd string bit-by-bit out to the SIM800 chip.
-    read();                                                     // Call read() which parses the reply provided by the SIM800 module into the ioBuffer char array.
+//let the sim800 reply
+uint32_t _t = millis() + 3000;
+while(!simCom.available() && _t >= millis()){;}
+read();                                                     // Call read() which parses the reply provided by the SIM800 module into the ioBuffer char array.
 }
 
 
@@ -127,18 +130,33 @@ void SIM800::cmdBenchmark(bool b) {                             // Enables or di
 
 // ============================================================
 void SIM800::read() {                                           // The main function which parses the responses provided by the SIM800 chip into the ioBuffer char array.
-    clearBuffer();                                              // First the ioBuffer is cleared from old data.
-    timeOut(INIT);                                              // Initial timestamp is taken to calculate the reply timeout.
-    while (!simCom.available()) {                               // If the module does not reply at all, indicate timeout.
-        if (timeOut(RUN)) {
-            strcat_P(ioBuffer, P("TIMEOUT"));
-            break;
-        }
-    }
+
+
+if(!simCom.available()){
+	
+}else{
+	clearBuffer();                                              // First the ioBuffer is cleared from old data.
+	
+    //timeOut(INIT);                                              // Initial timestamp is taken to calculate the reply timeout.
+   // while (!simCom.available()) {                               // If the module does not reply at all, indicate timeout.
+    //    if (timeOut(RUN)) {
+     //       strcat_P(ioBuffer, P("TIMEOUT"));
+     //       break;
+   //     }
+   // }
     uint32_t i = 0;                                                 // The counter which counts each char received from the SIM800 module.
-    while (!timeOut(RUN)) {                                         // While time has not run out (timeLimit has not been reached).
-        if (simCom.available()) {                                   // If next char becomes available
-            timeOut(DELAY);                                         // If benchmark has not been enabled, take new timestamp to delay timeout.
+   // while (!timeOut(RUN)) {     
+   // While time has not run out (timeLimit has not been reached).
+   
+   
+   bool _r1 = true;
+   uint32_t _t1 = millis() + 5000;
+   
+   while(_t1 >= millis()){
+        
+		if(simCom.available()) {                                   // If next char becomes available
+		
+           // timeOut(DELAY);                                         // If benchmark has not been enabled, take new timestamp to delay timeout.
             if (slicePoint == 0 && i < DEF_BUFFER_SIZE) {           // If slicing is disabled and the ioBuffer is not full,
                 ioBuffer[i] = simCom.read();                        // read the available char into ioBuffer index i.
                 if (ioBuffer[i] == endChar && endOfTx(i)) break;    // If the value read equals 10 and endOfTx at index i detects presence of "OK" or "ERROR", end read().
@@ -150,15 +168,19 @@ void SIM800::read() {                                           // The main func
                 i++;                                                // and increment the char counter.
             }
         }
-    }
-    timeOut(GETBM);                                              // If benchmark has been enabled, calculate the time it took to receive the reply and save it into global variable benchTime.
+   }
+   
+	//}
+    //timeOut(GETBM);                                              // If benchmark has been enabled, calculate the time it took to receive the reply and save it into global variable benchTime.
     overrideTimeout(0);                                          // If override is enabled, disable override and put the old timeLimit value back into the timeLimit variable.
     replaceEscapeChars();                                        // If enabled, replace unreadable ASCII control chars 10 and 13 with spaces. This is necessary for the reply() method to work properly.
     slicePoint = 0;                                              // If slicing had been enabled, but the reply never reached the slice point (slicePoint value is larger than reply char count), disable slicing to prevent errors.
 
+
 #ifdef DEBUG
 debug(REPLY);                                                    // If #define DEBUG is uncommented in the SIM800.h file, print the contents of ioBuffer to Serial Monitor.
 #endif
+}
 }
 
 
