@@ -1,9 +1,29 @@
-# Aspen SIM800 Proper Usage Guide & Library Updated to NONBLOCKING MODE
+# Aspen SIM800 Proper Usage Guide
+
+
+### Library Updated to NONBLOCKING MODE
 
 Now it does not waits in loops in the library.
 No More TimeOut in the serial.
 
-## For Starters, Check the included PDF file for command names.
+
+
+
+
+## For Starters:
+
+* Update Rx & Tx Pins to sim800.h file.
+* Provide 3.7-4.2V to Sim800 Module (2 Amp is Recommended)
+* Level Shift for Rx Pin for Sim800
+* Some Pins on Arduino Does'n work for Tx Rx (Tested OK : 9,10)
+* Change baud rate to whatever your sim800 is set to (default is autobaud)
+* include <SIM800.h>
+* Test SIM.AT() and check SIM.getBuffer() for reply.
+* Use the code shown below
+
+
+
+
 
 ### Help documents
 * Library Builtin PDF Document
@@ -30,6 +50,55 @@ No More TimeOut in the serial.
 # Command Usage:
 
 
+
+
+
+## Declares
+
+```cpp
+
+char* AUTHNO = "9915652222";
+unsigned long gsmtimer = 0;
+
+unsigned long timer1 = 0;
+unsigned long timer2 = 0;
+unsigned long timer3 = 0;
+unsigned long timer4 = 0;
+unsigned long timer5 = 0;
+unsigned long lastcalltime = 0;
+
+int gsmsetupdone=true;
+
+int gsmtestmode = 0;
+
+bool isaterr = false;
+bool issimerr = false;
+bool isnetworkerr = false;
+bool issignalerr = false;
+
+bool isincall = false;
+bool relayon = false;
+bool buzzeron = false;
+bool networkok = false;
+bool listenon = false;
+bool bootmsg = false;
+bool sendalert = true;
+int sendalertfrom = 0;
+bool gsmstarted = false;
+
+uint8_t myear = 0;
+uint8_t mmonth = 0;
+uint8_t mday = 0;
+uint8_t mhour = 0;
+uint8_t mminute = 0;
+uint8_t msecond = 0;
+
+uint32_t _timer1 = 0;
+uint32_t _timer2 = 0;
+uint32_t _timer3 = 0;
+
+bool motoron = false;
+```
 
 ## Detect Call ongoing (incoming or outgoing)
 
