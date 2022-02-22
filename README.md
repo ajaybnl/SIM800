@@ -1,22 +1,20 @@
-# Aspen SIM800 Proper Usage Guide & Library Updated to NONBLOCKING MODE
+## Aspen SIM800 Proper Usage Guide & Library Updated to NONBLOCKING MODE
 
 Now it does not waits in loops in the library.
 No More TimeOut in the serial.
 
+# For Starters, Check the included PDF file for command names.
+
+Help documents:
+https://m2msupport.net/m2msupport/atcreg-network-registration/
+https://mt-system.ru/sites/default/files/simcom_sim800_series_bluetooth_application_guide_v1.01.pdf
+https://www.elecrow.com/wiki/images/2/20/SIM800_Series_AT_Command_Manual_V1.09.pdf
 
 
-# Original Comments :
-!!! The library works, but it's not officially supported anymore due to lack of time and interest !!!
+Command Usage:
 
-A comprehensive SIM800 Series library for simplified and in-depth chip access.
+## Detect Call ongoing (incoming or outgoing)
 
-This library provides wrapper methods for all AT commands defined in the official SIM800 manual, many helper methods to work with returned replies, advanced serial timeout functionalities, and also methods to directly communicate with the chip. Full library documentation and numerous examples are also provided.
-
-
-
-
-
-Usage:
 ```cpp
 
 bool gsmisincall(){
@@ -27,6 +25,9 @@ bool gsmisincall(){
 
 }
 ```
+
+## Extended Error Check Function
+
 
 ```cpp
 bool iserr(char *errmatch1 = NULL)
@@ -53,7 +54,7 @@ bool iserr(char *errmatch1 = NULL)
 
 
 
-
+## Initial Test for various things
 
 ```cpp
 /****************************************************************************************************************************
@@ -150,8 +151,11 @@ void gsmloop()
 
   if(gsmtestmode==5){
   gsmtestmode++;
-  //gsmcall("9915652222");
+  //Call or Sms Me
+  
+  
   }
+
 
   if(gsmtestmode>=5){
   // All Tests Passed.
@@ -160,6 +164,15 @@ void gsmloop()
   }
 
   }
+
+```
+
+
+
+## Handle Messages (Different Kinds) Received
+
+
+```cpp
 
 
   /******************************************************/
@@ -300,7 +313,7 @@ void gsmloop()
 
 
 
-
+## Get Auth Number
 
 ```cpp
   /****************************************************************************************************************************
@@ -317,7 +330,7 @@ void gsmsetownerno(char *number1)
 
 
 
-
+## Initialize SIM800 and test AT 
 
 
 ```cpp
@@ -375,20 +388,7 @@ bool gsminit()
 
 
 
-
-
-```cpp
-// Set Sim800 Params (Needed for Call Alert, Sim Test Etc)
-bool gsmsetparams()
-{
-  return (setinitials());
-}
-
-```
-
-
-
-
+## Check Network Strength (0-30)
 
 
 ```cpp
@@ -435,7 +435,7 @@ int gsmgetnetworkstrength(){
 
 
 
-
+## Send Sms (To Auth User)
 
 ```cpp
 /****************************************************************************************************************************
@@ -476,7 +476,7 @@ bool gsmsendsms(char *msg)
 
 
 
-
+## Initiate Call
 
 ```cpp
 /****************************************************************************************************************************
@@ -510,7 +510,7 @@ if(de)debug(data1);
 
 
 
-
+## Detect Command from SMS
 
 ```cpp
 /****************************************************************************************************************************
@@ -551,26 +551,13 @@ void detectsmscommand()
 
 
 
-
+## Authorize the Call or Sms Sender Number
 
 ```cpp
 
 
-
-
-
-
-
 /****************************************************************************************************************************
 *****************************************************************************************************************************/
-
-
-
-
-
-
-
-
 
 bool authsender(char *buffer1)
 {
@@ -610,25 +597,13 @@ bool authsender(char *buffer1)
 
 
 
-
+## Set Initial Configuration (For CallerID , SMS Notification , etc)
 
 
 ```cpp
 
-
-
-
-
-
 /****************************************************************************************************************************
 *****************************************************************************************************************************/
-
-
-
-
-
-
-
 
 
 bool setinitials()
@@ -765,18 +740,10 @@ SIM.deviceError(SET,"2");
 
 
 
-
+## Extract Time Date from Gsm Buffer
 
 /****************************************************************************************************************************
 *****************************************************************************************************************************/
-
-
-
-
-
-
-
-
 
 void gettimedate(char *buffer1)
 {
@@ -832,39 +799,12 @@ void gettimedate(char *buffer1)
 
 
 
-
+## untested
 
 ```cpp
 
-
-
-
-
-
-
 /****************************************************************************************************************************
 *****************************************************************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 bool gsmiscallready() {
   
