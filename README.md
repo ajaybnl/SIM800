@@ -1,5 +1,11 @@
-# Aspen SIM800
+# Aspen SIM800 Proper Usage Guide & Library Updated to NONBLOCKING MODE
 
+Now it does not waits in loops in the library.
+No More TimeOut in the serial.
+
+
+
+# Original Comments :
 !!! The library works, but it's not officially supported anymore due to lack of time and interest !!!
 
 A comprehensive SIM800 Series library for simplified and in-depth chip access.
