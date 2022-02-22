@@ -1,9 +1,9 @@
-## Aspen SIM800 Proper Usage Guide & Library Updated to NONBLOCKING MODE
+# Aspen SIM800 Proper Usage Guide & Library Updated to NONBLOCKING MODE
 
 Now it does not waits in loops in the library.
 No More TimeOut in the serial.
 
-# For Starters, Check the included PDF file for command names.
+## For Starters, Check the included PDF file for command names.
 
 Help documents:
 https://m2msupport.net/m2msupport/atcreg-network-registration/
@@ -11,7 +11,24 @@ https://mt-system.ru/sites/default/files/simcom_sim800_series_bluetooth_applicat
 https://www.elecrow.com/wiki/images/2/20/SIM800_Series_AT_Command_Manual_V1.09.pdf
 
 
-Command Usage:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Command Usage:
+
+
 
 ## Detect Call ongoing (incoming or outgoing)
 
